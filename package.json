@@ -1,7 +1,7 @@
 {
-  "name": "bucketlist-api",
+  "name": "chat-api",
   "version": "1.0.0",
-  "description": "websocket api for bucketlist",
+  "description": "websocket api for realtime chat",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
