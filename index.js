@@ -2,7 +2,7 @@ const app = require('express')()
 const socket = require('socket.io')
 
 // App setup
-const port = '4040'
+const port = process.env.PORT || 4040
 const server = app.listen(`${port}`, () => console.log(`Listening on port: ${port}`))
 
 // Sockets stuff
