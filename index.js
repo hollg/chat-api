@@ -7,9 +7,14 @@ const server = app.listen(`${port}`, () => console.log(`Listening on port: ${por
 
 // Sockets stuff
 const io = socket(server)
+let currentUsers = []
 
 function randomHex () {
   return '#' + (Math.random().toString(16) + '000000').slice(2, 8)
+}
+
+function isNicknameUnique(users, nickname) {
+  return users.filter( u => u.nickname === nickname).length <= 0
 }
 
 io.on('connection', socket => {
@@ -20,5 +25,13 @@ io.on('connection', socket => {
 
   socket.on('chat', data => {
     io.sockets.emit('chat', data)
+  })
+
+  socket.on('nickname', data => {
+    if (isNicknameUnique(currentUsers, data.nickname) && data.nickname.length != 0){
+      currentUsers.push({nickname: data.nickname, id: socket.id})
+      socket.emit('nickname', data)
+    }
+    
   })
 })
