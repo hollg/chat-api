@@ -34,4 +34,9 @@ io.on('connection', socket => {
     }
     
   })
+
+  socket.on('disconnect', () => {
+    currentUsers = currentUsers.filter(u => u.id !== socket.id)
+  })
+
 })
