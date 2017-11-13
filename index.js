@@ -31,8 +31,16 @@ io.on('connection', socket => {
     if (isNicknameUnique(currentUsers, data.nickname) && data.nickname.length != 0){
       currentUsers.push({nickname: data.nickname, id: socket.id})
       socket.emit('nickname', data)
+      socket.broadcast.emit('userJoined', data)
     }
-    
+  })
+
+  socket.on('startTyping', (data) => {
+    socket.broadcast.emit('userStartTyping', data)
+  })
+
+  socket.on('stopTyping', (data) => {
+    socket.broadcast.emit('userStopTyping', data)
   })
 
   socket.on('disconnect', () => {
