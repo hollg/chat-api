@@ -1,6 +1,9 @@
 const app = require('express')()
 const socket = require('socket.io')
 
+const {verifyNickname} = require('./modules/validation.js')
+const {randomHex} = require('./modules/colourGenerator.js')
+
 // App setup
 const port = process.env.PORT || 4040
 const server = app.listen(`${port}`, () => console.log(`Listening on port: ${port}`))
@@ -8,27 +11,6 @@ const server = app.listen(`${port}`, () => console.log(`Listening on port: ${por
 // Sockets stuff
 const io = socket(server)
 let currentUsers = []
-
-function randomHex () {
-  return '#' + (Math.random().toString(16) + '000000').slice(2, 8)
-}
-
-function isNicknameUnique (users, nickname) {
-  if (users.length === 0) {
-    return true
-  } else {
-    return users.filter(u => u.nickname === nickname).length <= 0
-  }
-}
-
-function verifyNickname (nickname) {
-  if (nickname.length === 0) {
-    throw new Error('Please enter a nickname!')
-  }
-  if (!isNicknameUnique(currentUsers, nickname)) {
-    throw new Error('That nickname is already in use!')
-  }
-}
 
 io.on('connection', socket => {
   console.log(`Made socket connection: ${socket.id}`)
@@ -42,7 +24,7 @@ io.on('connection', socket => {
 
   socket.on('nickname', data => {
     try {
-      verifyNickname(data.nickname)
+      verifyNickname(data.nickname, currentUsers)
       currentUsers.push({nickname: data.nickname, id: socket.id})
       socket.emit('nickname', data)
       socket.broadcast.emit('userJoined', data)
