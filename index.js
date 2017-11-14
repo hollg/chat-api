@@ -13,8 +13,8 @@ function randomHex () {
   return '#' + (Math.random().toString(16) + '000000').slice(2, 8)
 }
 
-function isNicknameUnique(users, nickname) {
-  return users.filter( u => u.nickname === nickname).length <= 0
+function isNicknameUnique (users, nickname) {
+  return users.filter(u => u.nickname === nickname).length <= 0
 }
 
 io.on('connection', socket => {
@@ -28,7 +28,7 @@ io.on('connection', socket => {
   })
 
   socket.on('nickname', data => {
-    if (isNicknameUnique(currentUsers, data.nickname) && data.nickname.length != 0){
+    if (isNicknameUnique(currentUsers, data.nickname) && data.nickname.length !== 0) {
       currentUsers.push({nickname: data.nickname, id: socket.id})
       socket.emit('nickname', data)
       socket.broadcast.emit('userJoined', data)
@@ -46,5 +46,4 @@ io.on('connection', socket => {
   socket.on('disconnect', () => {
     currentUsers = currentUsers.filter(u => u.id !== socket.id)
   })
-
 })
