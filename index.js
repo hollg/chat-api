@@ -14,7 +14,20 @@ function randomHex () {
 }
 
 function isNicknameUnique (users, nickname) {
-  return users.filter(u => u.nickname === nickname).length <= 0
+  if (users.length === 0) {
+    return true
+  } else {
+    return users.filter(u => u.nickname === nickname).length <= 0
+  }
+}
+
+function verifyNickname (nickname) {
+  if (nickname.length === 0) {
+    throw new Error('Please enter a nickname!')
+  }
+  if (!isNicknameUnique(currentUsers, nickname)) {
+    throw new Error('That nickname is already in use!')
+  }
 }
 
 io.on('connection', socket => {
@@ -28,10 +41,16 @@ io.on('connection', socket => {
   })
 
   socket.on('nickname', data => {
-    if (isNicknameUnique(currentUsers, data.nickname) && data.nickname.length !== 0) {
+    try {
+      verifyNickname(data.nickname)
       currentUsers.push({nickname: data.nickname, id: socket.id})
       socket.emit('nickname', data)
       socket.broadcast.emit('userJoined', data)
+    } catch (err) {
+      console.log(`Error: ${err.message} (id: ${socket.id})`)
+      socket.emit('validationError', {
+        errorMessage: err.message
+      })
     }
   })
 
