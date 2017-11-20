@@ -5,10 +5,10 @@
   "main": "index.js",
   "scripts": {
     "test": "standard",
-    "start": "nodemon src/index.js --exec babel-node --presets es2015,stage-2",
+    "dev": "nodemon src/index.js --exec babel-node --presets es2015,stage-2",
     "build": "rimraf dist/* && babel src -d dist --presets es2015,stage-2",
     "serve": "node dist/index.js",
-    "deploy": "npm run build && npm run serve"
+    "start": "npm run build && npm run serve"
   },
   "author": "gary holland",
   "license": "ISC",
