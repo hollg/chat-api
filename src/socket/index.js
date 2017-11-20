@@ -5,7 +5,7 @@ export default function InitialiseSockets(io, currentUsers) {
   io.on('connection', socket => {
     console.log(`Made socket connection: ${socket.id}`)
 
-    var hex = randomHex()
+    let hex = randomHex()
     socket.emit('hex', {hex})
 
     socket.on('chat', data => {
