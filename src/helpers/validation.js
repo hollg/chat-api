@@ -1,5 +1,5 @@
 function isNicknameUnique (nickname, currentUsers) {
-    return currentUsers.length === 0 || currentUsers.filter(u => u.nickname === nickname).length <= 0
+  return currentUsers.length === 0 || currentUsers.filter(u => u.nickname === nickname).length <= 0
 }
 
 export default function verifyNickname (nickname, currentUsers) {
@@ -10,4 +10,3 @@ export default function verifyNickname (nickname, currentUsers) {
     throw new Error('That nickname is already in use!')
   }
 }
-
