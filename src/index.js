@@ -1,8 +1,10 @@
-const app = require('express')()
-const socket = require('socket.io')
+import express from 'express'
+import socket from 'socket.io'
 
-const {verifyNickname} = require('./modules/validation.js')
-const {randomHex} = require('./modules/colourGenerator.js')
+const app = express()
+
+import verifyNickname from './js/validation.js'
+import randomHex from './js/colourGenerator.js'
 
 // App setup
 const port = process.env.PORT || 4040

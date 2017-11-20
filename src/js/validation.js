@@ -2,7 +2,7 @@ function isNicknameUnique (nickname, currentUsers) {
     return currentUsers.length === 0 || currentUsers.filter(u => u.nickname === nickname).length <= 0
 }
 
-function verifyNickname (nickname, currentUsers) {
+export default function verifyNickname (nickname, currentUsers) {
   if (nickname.length === 0) {
     throw new Error('Please enter a nickname!')
   }
@@ -11,7 +11,3 @@ function verifyNickname (nickname, currentUsers) {
   }
 }
 
-module.exports = {
-  isNicknameUnique: isNicknameUnique,
-  verifyNickname: verifyNickname
-}
